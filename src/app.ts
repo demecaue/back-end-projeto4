@@ -1,6 +1,7 @@
 import express from 'express';
 import { Usuario } from './model/Usuario';
 import { cpfValido } from './validators/cpf';
+import { emailValido } from './validators/email';
 import { nivelSenha } from './validators/senha';
 
 const app = express();
@@ -14,6 +15,11 @@ app.post('/usuarios', (req, res) => {
 
     if (!preenchidos) {
         res.status(400).json({ mensagem: 'Nome, email, senha e CPF são obrigatórios' });
+        return;
+    }
+
+    if (!emailValido(email)) {
+        res.status(400).json({ mensagem: 'Email inválido' });
         return;
     }
 
