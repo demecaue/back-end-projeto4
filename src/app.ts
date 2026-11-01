@@ -9,6 +9,7 @@ const usuarios: Usuario[] = [];
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
+// Rubrica: cadastro com os campos obrigatórios nome, email, senha e CPF
 app.post('/usuarios', (req, res) => {
     const { nome, email, senha, cpf } = req.body ?? {};
     const preenchidos = [nome, email, senha, cpf].every((campo) => typeof campo === 'string' && campo.trim());

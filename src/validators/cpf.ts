@@ -1,3 +1,4 @@
+// Rubrica: validação de CPF
 const calcularDigito = (numeros: string, tamanho: number) => {
     let soma = 0;
     for (let i = 0; i < tamanho; i++) {

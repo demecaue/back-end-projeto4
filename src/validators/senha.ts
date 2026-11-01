@@ -1,3 +1,4 @@
+// Rubrica: validação de nível de senha
 export const nivelSenha = (senha: string) => {
     if (senha.length < 8) return 'fraca';
 

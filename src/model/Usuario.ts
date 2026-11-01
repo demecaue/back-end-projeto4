@@ -21,6 +21,7 @@ export class Usuario {
         return this.#email;
     }
 
+    // Rubrica: aplica a validação de email no cadastro
     set email(valor: string) {
         if (!emailValido(valor)) throw new ErroValidacao('Email inválido');
         this.#email = valor.toLowerCase();
@@ -30,11 +31,13 @@ export class Usuario {
         return this.#cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     }
 
+    // Rubrica: aplica a validação de CPF no cadastro
     private set cpf(valor: string) {
         if (!cpfValido(valor)) throw new ErroValidacao('CPF inválido');
         this.#cpf = valor.replace(/\D/g, '');
     }
 
+    // Rubrica: aplica a validação de nível de senha no cadastro
     set senha(valor: string) {
         if (nivelSenha(valor) === 'fraca') {
             throw new ErroValidacao('Senha fraca: use 8 caracteres e 3 tipos entre minúscula, maiúscula, número e símbolo');
