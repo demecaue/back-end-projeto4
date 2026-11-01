@@ -1,6 +1,7 @@
 import express from 'express';
 import { Usuario } from './model/Usuario';
 import { cpfValido } from './validators/cpf';
+import { nivelSenha } from './validators/senha';
 
 const app = express();
 const usuarios: Usuario[] = [];
@@ -18,6 +19,11 @@ app.post('/usuarios', (req, res) => {
 
     if (!cpfValido(cpf)) {
         res.status(400).json({ mensagem: 'CPF inválido' });
+        return;
+    }
+
+    if (nivelSenha(senha) === 'fraca') {
+        res.status(400).json({ mensagem: 'Senha fraca: use 8 caracteres e 3 tipos entre minúscula, maiúscula, número e símbolo' });
         return;
     }
 
