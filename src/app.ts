@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import { Usuario } from './model/Usuario';
 import { cpfValido } from './validators/cpf';
@@ -7,6 +8,7 @@ import { nivelSenha } from './validators/senha';
 const app = express();
 const usuarios: Usuario[] = [];
 
+app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
 app.post('/usuarios', (req, res) => {
