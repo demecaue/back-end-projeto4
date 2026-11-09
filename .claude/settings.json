@@ -11,7 +11,11 @@
       "PowerShell(git push *)",
       "PowerShell(git reset --hard *)",
       "PowerShell(Remove-Item -Recurse *)",
-      "PowerShell(docker compose down -v *)"
+      "PowerShell(docker compose down -v *)",
+      "Read(./.env)",
+      "Edit(./.env)",
+      "Bash(cat .env*)",
+      "PowerShell(Get-Content .env*)"
     ],
     "ask": [
       "Bash(npm install *)",

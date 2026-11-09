@@ -47,3 +47,10 @@ As regras ficam em `.claude/settings.json` e valem quando o agente é aberto nes
 - Pedem confirmação: `npm install`.
 - Não altere arquivos fora deste repositório.
 - Não apague nem renomeie arquivos sem pedido do usuário.
+
+<!-- Rubrica: proteção de arquivos sensíveis, impedindo que o agente leia ou exponha o .env -->
+## Arquivos sensíveis
+
+- O `.env` guarda senhas e chaves. Ele fica fora do Git, e o `.claude/settings.json` bloqueia a leitura e a edição pelo agente.
+- Os nomes das variáveis ficam no `.env.example`, sem valores reais. Esse arquivo pode ser lido.
+- Nunca escreva senha, token ou chave no código, em logs ou nas respostas.
