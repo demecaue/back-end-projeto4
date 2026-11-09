@@ -28,3 +28,12 @@ API do controle de estoque de materiais elétricos da DW Engenharia Elétrica. O
 
 - Trabalhe em um item da rubrica por vez.
 - Ao terminar, pare e descreva o que mudou.
+
+<!-- Rubrica: definição de 3 skills específicas para os agentes -->
+## Skills
+
+Ficam em `.claude/skills`:
+
+- `item-rubrica`: implementa um item da rubrica por vez e deixa o commit para o usuário.
+- `crud-recurso`: cria o CRUD completo de um recurso do estoque.
+- `testar-api`: sobe a API e testa as rotas, inclusive os casos de erro.
