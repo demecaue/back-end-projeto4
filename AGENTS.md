@@ -37,3 +37,13 @@ Ficam em `.claude/skills`:
 - `item-rubrica`: implementa um item da rubrica por vez e deixa o commit para o usuário.
 - `crud-recurso`: cria o CRUD completo de um recurso do estoque.
 - `testar-api`: sobe a API e testa as rotas, inclusive os casos de erro.
+
+<!-- Rubrica: implementação de guardrails para limitar ações e comportamentos do agente -->
+## Guardrails
+
+As regras ficam em `.claude/settings.json` e valem quando o agente é aberto nesta pasta.
+
+- Bloqueados: `git commit`, `git push`, `git reset --hard`, exclusão recursiva de pastas e `docker compose down -v`.
+- Pedem confirmação: `npm install`.
+- Não altere arquivos fora deste repositório.
+- Não apague nem renomeie arquivos sem pedido do usuário.
