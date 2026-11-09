@@ -15,6 +15,7 @@ services:
     volumes:
       # Rubrica: persistência de dados no MySQL com volume
       - mysql-dados:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d:ro
     networks:
       - rede-dw
 

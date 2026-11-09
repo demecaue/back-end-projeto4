@@ -9,12 +9,15 @@ API do controle de estoque de materiais elétricos da DW Engenharia Elétrica. O
 - `npm run dev`: sobe a API na porta 3000 com recarga automática.
 - `npm run build`: compila para `dist`.
 - `npx tsc --noEmit`: confere os tipos. Rode antes de entregar qualquer mudança.
+- `docker compose up -d`: sobe o MySQL. As credenciais vêm do `.env`.
 
 ## Estrutura
 
 - `src/app.ts`: rotas.
 - `src/model`: classes do domínio e erros customizados.
 - `src/validators`: validações de CPF, email e nível de senha.
+- `sql`: tabelas e dados iniciais. Rodam sozinhos só quando o banco é criado do zero.
+- `docker-compose.yml`: serviço do MySQL com volume e rede.
 
 ## Padrões
 
