@@ -52,6 +52,11 @@ export class Usuario {
         this.#senhaHash = `${salt}:${scryptSync(valor, salt, 64).toString('hex')}`;
     }
 
+    // Rubrica: senha criptografada no banco, só o hash sai da classe para ser salvo
+    dadosParaBanco() {
+        return { nome: this.#nome, email: this.#email, senhaHash: this.#senhaHash, cpf: this.#cpf };
+    }
+
     // Rubrica Tech Forge: expõe só os dados necessários na resposta da API
     toJSON() {
         return { nome: this.#nome, email: this.email, cpf: this.cpf };

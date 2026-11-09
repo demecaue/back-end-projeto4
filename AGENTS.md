@@ -14,7 +14,9 @@ API do controle de estoque de materiais elétricos da DW Engenharia Elétrica. O
 ## Estrutura
 
 - `src/app.ts`: rotas.
+- `src/database.ts`: conexão com o MySQL.
 - `src/model`: classes do domínio e erros customizados.
+- `src/repositorios`: consultas SQL de cada recurso.
 - `src/validators`: validações de CPF, email e nível de senha.
 - `sql`: tabelas e dados iniciais. Rodam sozinhos só quando o banco é criado do zero.
 - `docker-compose.yml`: serviço do MySQL com volume e rede.

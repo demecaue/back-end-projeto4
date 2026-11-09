@@ -2,15 +2,17 @@ import cors from 'cors';
 import express from 'express';
 import { ErroValidacao } from './model/ErroValidacao';
 import { Usuario } from './model/Usuario';
+import { UsuarioRepositorio } from './repositorios/UsuarioRepositorio';
 
 const app = express();
-const usuarios: Usuario[] = [];
+const usuarioRepositorio = new UsuarioRepositorio();
+const porta = Number(process.env.PORT ?? 3000);
 
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
 // Rubrica: cadastro com os campos obrigatórios nome, email, senha e CPF
-app.post('/usuarios', (req, res) => {
+app.post('/usuarios', async (req, res) => {
     const { nome, email, senha, cpf } = req.body ?? {};
     const preenchidos = [nome, email, senha, cpf].every((campo) => typeof campo === 'string' && campo.trim());
 
@@ -21,7 +23,7 @@ app.post('/usuarios', (req, res) => {
 
     try {
         const usuario = new Usuario(nome, email, senha, cpf);
-        usuarios.push(usuario);
+        await usuarioRepositorio.salvar(usuario);
         res.status(201).json(usuario);
     } catch (erro) {
         if (!(erro instanceof ErroValidacao)) throw erro;
@@ -29,6 +31,6 @@ app.post('/usuarios', (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
+app.listen(porta, () => {
+    console.log(`Servidor rodando na porta ${porta}`);
 });
