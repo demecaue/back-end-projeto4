@@ -1,8 +1,8 @@
 import { randomBytes, scryptSync } from 'node:crypto';
-import { cpfValido } from '../validators/cpf';
-import { emailValido } from '../validators/email';
-import { nivelSenha } from '../validators/senha';
-import { ErroValidacao } from './ErroValidacao';
+import { ErroValidacao } from '../erros/ErroValidacao';
+import { cpfValido } from '../validadores/cpf';
+import { emailValido } from '../validadores/email';
+import { nivelSenha } from '../validadores/senha';
 
 export class Usuario {
     // Rubrica Tech Forge: proteção do estado com campos privados nativos

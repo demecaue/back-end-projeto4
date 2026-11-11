@@ -1,7 +1,7 @@
 import type { QueryError } from 'mysql2';
 import { banco } from '../database';
-import { ErroValidacao } from '../model/ErroValidacao';
-import { Usuario } from '../model/Usuario';
+import { Usuario } from '../entidades/Usuario';
+import { ErroConflito } from '../erros/ErroConflito';
 
 export class UsuarioRepositorio {
     async salvar(usuario: Usuario) {
@@ -13,7 +13,7 @@ export class UsuarioRepositorio {
                 [nome, email, senhaHash, cpf],
             );
         } catch (erro) {
-            if ((erro as QueryError).code === 'ER_DUP_ENTRY') throw new ErroValidacao('Email já cadastrado');
+            if ((erro as QueryError).code === 'ER_DUP_ENTRY') throw new ErroConflito('Email já cadastrado');
             throw erro;
         }
     }
