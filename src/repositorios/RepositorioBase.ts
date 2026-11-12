@@ -11,9 +11,13 @@ interface Total extends RowDataPacket {
 export abstract class RepositorioBase<T extends RowDataPacket> {
     constructor(protected readonly tabela: string) {}
 
+    protected selecao() {
+        return `SELECT * FROM ${this.tabela}`;
+    }
+
     async listar(pagina: number, limite: number) {
         const [dados] = await banco.query<T[]>(
-            `SELECT * FROM ${this.tabela} ORDER BY id LIMIT ? OFFSET ?`,
+            `${this.selecao()} ORDER BY ${this.tabela}.id LIMIT ? OFFSET ?`,
             [limite, (pagina - 1) * limite],
         );
         const [[{ total }]] = await banco.query<Total[]>(`SELECT COUNT(*) AS total FROM ${this.tabela}`);
@@ -21,7 +25,7 @@ export abstract class RepositorioBase<T extends RowDataPacket> {
     }
 
     async buscarPorId(id: number) {
-        const [linhas] = await banco.query<T[]>(`SELECT * FROM ${this.tabela} WHERE id = ?`, [id]);
+        const [linhas] = await banco.query<T[]>(`${this.selecao()} WHERE ${this.tabela}.id = ?`, [id]);
         return linhas[0];
     }
 

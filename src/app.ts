@@ -3,10 +3,16 @@ import express, { type NextFunction, type Request, type Response } from 'express
 import { ErroAplicacao } from './erros/ErroAplicacao';
 import { autenticar } from './middlewares/autenticar';
 import { CategoriaRepositorio } from './repositorios/CategoriaRepositorio';
+import { ClienteRepositorio } from './repositorios/ClienteRepositorio';
+import { MaterialRepositorio } from './repositorios/MaterialRepositorio';
+import { ObraRepositorio } from './repositorios/ObraRepositorio';
 import { UsuarioRepositorio } from './repositorios/UsuarioRepositorio';
 import { criarRotasCrud } from './rotas/criarRotasCrud';
 import { AutenticacaoServico } from './servicos/AutenticacaoServico';
 import { CategoriaServico } from './servicos/CategoriaServico';
+import { ClienteServico } from './servicos/ClienteServico';
+import { MaterialServico } from './servicos/MaterialServico';
+import { ObraServico } from './servicos/ObraServico';
 import { UsuarioServico } from './servicos/UsuarioServico';
 
 const app = express();
@@ -37,7 +43,13 @@ app.put('/usuarios/:id', autenticar, async (req, res) => {
 });
 
 // Rubrica: CRUDs completos do estoque
-app.use('/categorias', criarRotasCrud(new CategoriaServico(new CategoriaRepositorio())));
+const categoriaRepositorio = new CategoriaRepositorio();
+app.use('/categorias', criarRotasCrud(new CategoriaServico(categoriaRepositorio)));
+app.use('/materiais', criarRotasCrud(new MaterialServico(new MaterialRepositorio(), categoriaRepositorio)));
+
+const clienteRepositorio = new ClienteRepositorio();
+app.use('/clientes', criarRotasCrud(new ClienteServico(clienteRepositorio)));
+app.use('/obras', criarRotasCrud(new ObraServico(new ObraRepositorio(), clienteRepositorio)));
 
 // Rubrica Tech Forge: tratamento central das exceções customizadas
 app.use((erro: Error, _req: Request, res: Response, _next: NextFunction) => {
