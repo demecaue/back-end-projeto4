@@ -2,8 +2,11 @@ import cors from 'cors';
 import express, { type NextFunction, type Request, type Response } from 'express';
 import { ErroAplicacao } from './erros/ErroAplicacao';
 import { autenticar } from './middlewares/autenticar';
+import { CategoriaRepositorio } from './repositorios/CategoriaRepositorio';
 import { UsuarioRepositorio } from './repositorios/UsuarioRepositorio';
+import { criarRotasCrud } from './rotas/criarRotasCrud';
 import { AutenticacaoServico } from './servicos/AutenticacaoServico';
+import { CategoriaServico } from './servicos/CategoriaServico';
 import { UsuarioServico } from './servicos/UsuarioServico';
 
 const app = express();
@@ -32,6 +35,9 @@ app.get('/usuarios/:id', autenticar, async (req, res) => {
 app.put('/usuarios/:id', autenticar, async (req, res) => {
     res.json(await usuarioServico.editar(Number(req.params.id), req.usuarioId, req.body ?? {}));
 });
+
+// Rubrica: CRUDs completos do estoque
+app.use('/categorias', criarRotasCrud(new CategoriaServico(new CategoriaRepositorio())));
 
 // Rubrica Tech Forge: tratamento central das exceções customizadas
 app.use((erro: Error, _req: Request, res: Response, _next: NextFunction) => {

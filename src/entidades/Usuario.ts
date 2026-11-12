@@ -3,8 +3,10 @@ import { gerarHash } from '../seguranca/hashSenha';
 import { cpfValido } from '../validadores/cpf';
 import { emailValido } from '../validadores/email';
 import { nivelSenha } from '../validadores/senha';
+import { Entidade } from './Entidade';
 
-export class Usuario {
+// Rubrica Tech Forge: herança, o usuário também é uma entidade
+export class Usuario extends Entidade {
     // Rubrica Tech Forge: proteção do estado com campos privados nativos
     #nome: string;
     #email = '';
@@ -13,6 +15,7 @@ export class Usuario {
 
     // Rubrica Tech Forge: construtor limpo, só inicializa as propriedades
     constructor(nome: string, email: string, senha: string, cpf: string) {
+        super();
         this.#nome = nome;
         this.email = email;
         this.cpf = cpf;
