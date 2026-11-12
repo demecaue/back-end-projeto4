@@ -2,10 +2,13 @@ import cors from 'cors';
 import express, { type NextFunction, type Request, type Response } from 'express';
 import { ErroAplicacao } from './erros/ErroAplicacao';
 import { UsuarioRepositorio } from './repositorios/UsuarioRepositorio';
+import { AutenticacaoServico } from './servicos/AutenticacaoServico';
 import { UsuarioServico } from './servicos/UsuarioServico';
 
 const app = express();
-const usuarioServico = new UsuarioServico(new UsuarioRepositorio());
+const usuarioRepositorio = new UsuarioRepositorio();
+const usuarioServico = new UsuarioServico(usuarioRepositorio);
+const autenticacaoServico = new AutenticacaoServico(usuarioRepositorio);
 const porta = Number(process.env.PORT ?? 3000);
 
 app.use(cors({ origin: 'http://localhost:5173' }));
@@ -14,6 +17,10 @@ app.use(express.json());
 app.post('/usuarios', async (req, res) => {
     const usuario = await usuarioServico.cadastrar(req.body ?? {});
     res.status(201).json(usuario);
+});
+
+app.post('/login', async (req, res) => {
+    res.json(await autenticacaoServico.login(req.body ?? {}));
 });
 
 // Rubrica Tech Forge: tratamento central das exceções customizadas

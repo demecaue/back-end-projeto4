@@ -1,5 +1,5 @@
-import { randomBytes, scryptSync } from 'node:crypto';
 import { ErroValidacao } from '../erros/ErroValidacao';
+import { gerarHash } from '../seguranca/hashSenha';
 import { cpfValido } from '../validadores/cpf';
 import { emailValido } from '../validadores/email';
 import { nivelSenha } from '../validadores/senha';
@@ -48,8 +48,7 @@ export class Usuario {
         if (nivelSenha(valor) === 'fraca') {
             throw new ErroValidacao('Senha fraca: use 8 caracteres e 3 tipos entre minúscula, maiúscula, número e símbolo');
         }
-        const salt = randomBytes(16).toString('hex');
-        this.#senhaHash = `${salt}:${scryptSync(valor, salt, 64).toString('hex')}`;
+        this.#senhaHash = gerarHash(valor);
     }
 
     // Rubrica: senha criptografada no banco, só o hash sai da classe para ser salvo
