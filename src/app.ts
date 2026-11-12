@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express, { type NextFunction, type Request, type Response } from 'express';
 import { ErroAplicacao } from './erros/ErroAplicacao';
+import { autenticar } from './middlewares/autenticar';
 import { UsuarioRepositorio } from './repositorios/UsuarioRepositorio';
 import { AutenticacaoServico } from './servicos/AutenticacaoServico';
 import { UsuarioServico } from './servicos/UsuarioServico';
@@ -21,6 +22,15 @@ app.post('/usuarios', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     res.json(await autenticacaoServico.login(req.body ?? {}));
+});
+
+app.get('/usuarios/:id', autenticar, async (req, res) => {
+    res.json(await usuarioServico.buscar(Number(req.params.id), req.usuarioId));
+});
+
+// Rubrica: edição de usuário em rota autenticada
+app.put('/usuarios/:id', autenticar, async (req, res) => {
+    res.json(await usuarioServico.editar(Number(req.params.id), req.usuarioId, req.body ?? {}));
 });
 
 // Rubrica Tech Forge: tratamento central das exceções customizadas

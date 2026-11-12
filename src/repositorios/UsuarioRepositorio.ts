@@ -7,8 +7,11 @@ interface UsuarioBanco extends RowDataPacket {
     id: number;
     nome: string;
     email: string;
+    cpf: string;
     senha_hash: string;
 }
+
+const colunas = 'id, nome, email, cpf, senha_hash';
 
 export class UsuarioRepositorio {
     async salvar(usuario: Usuario) {
@@ -25,11 +28,21 @@ export class UsuarioRepositorio {
         }
     }
 
-    async buscarPorEmail(email: string) {
-        const [linhas] = await banco.execute<UsuarioBanco[]>(
-            'SELECT id, nome, email, senha_hash FROM usuario WHERE email = ?',
-            [email],
+    async atualizar(id: number, usuario: Usuario) {
+        const { nome, senhaHash, cpf } = usuario.dadosParaBanco();
+        await banco.execute(
+            'UPDATE usuario SET nome = ?, senha_hash = ?, cpf = ? WHERE id = ?',
+            [nome, senhaHash, cpf, id],
         );
+    }
+
+    async buscarPorEmail(email: string) {
+        const [linhas] = await banco.execute<UsuarioBanco[]>(`SELECT ${colunas} FROM usuario WHERE email = ?`, [email]);
+        return linhas[0];
+    }
+
+    async buscarPorId(id: number) {
+        const [linhas] = await banco.execute<UsuarioBanco[]>(`SELECT ${colunas} FROM usuario WHERE id = ?`, [id]);
         return linhas[0];
     }
 }

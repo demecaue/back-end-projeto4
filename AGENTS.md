@@ -20,6 +20,8 @@ API do controle de estoque de materiais elétricos da DW Engenharia Elétrica. O
 - `src/repositorios`: consultas SQL de cada recurso.
 - `src/erros`: exceções customizadas. Cada uma define o status HTTP.
 - `src/seguranca`: hash de senha e token JWT.
+- `src/middlewares`: `autenticar`, que exige o token JWT nas rotas protegidas.
+- `src/tipos`: tipos extras, como o `usuarioId` no `Request` do Express.
 - `src/validadores`: validações de CPF, email, nível de senha e campo preenchido.
 - `sql`: tabelas e dados iniciais. Rodam sozinhos só quando o banco é criado do zero.
 - `docker-compose.yml`: serviço do MySQL com volume e rede.

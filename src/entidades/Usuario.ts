@@ -24,8 +24,9 @@ export class Usuario {
     }
 
     // Rubrica: aplica a validação de email no cadastro
+    // Rubrica: não permitir que o usuário altere o email, o set é privado
     // Rubrica Tech Forge: set com validação e transformação
-    set email(valor: string) {
+    private set email(valor: string) {
         if (!emailValido(valor)) throw new ErroValidacao('Email inválido');
         this.#email = valor.toLowerCase();
     }

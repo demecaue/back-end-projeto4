@@ -26,6 +26,6 @@ export class AutenticacaoServico {
         }
 
         // Rubrica: retorno JWT
-        return { token: gerarToken(usuario.id), usuario: { nome: usuario.nome, email: usuario.email } };
+        return { token: gerarToken(usuario.id), usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email } };
     }
 }
